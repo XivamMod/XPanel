@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>XIVAM Access Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <style>
+    body {
+      background: #000;
+      color: #0f0;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: rgba(0, 0, 0, 0.9);
+      border: 2px solid #00ff00;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #00ff00;
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-shadow: 0 0 5px #00ff00;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background-color: #000;
+      color: #0f0;
+      border: 1px solid #0f0;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 8px #00ff00;
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 16px;
+      background-color: #000;
+      color: #00ff00;
+      border: 2px solid #00ff00;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ff00;
+    }
+
+    button:hover {
+      background-color: #00ff00;
+      color: #000;
+    }
+
+    #accessMsg {
+      margin-top: 15px;
+      color: red;
+    }
+
+    .footer {
+      margin-top: 30px;
+      color: #555;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>XIVAM ACCESS</h1>
+    <p>Enter Your Access Code:</p>
+    <input type="text" id="accessCode" placeholder="e.g. XIVAM123">
+    <button onclick="validateCode()">ENTER</button>
+    <p id="accessMsg"></p>
+  </div>
+
+  <div class="footer">DM FOR KEY🔑 <a href="https://t.me/DigiXivam" target="_blank" style="color:#0f0;">DigiXivam</a>
+  </div>
+
+  <script>
+    function validateCode() {
+      const code = document.getElementById('accessCode').value.trim();
+      if (!code) {
+        document.getElementById('accessMsg').innerText = "Please enter a code.";
+        return;
+      }
+
+      fetch('code-manager.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=use&code=' + encodeURIComponent(code)
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          window.location.href = "sss_final_hacker_with_sound_matrix.html?access=" + encodeURIComponent(code);
+        } else {
+          document.getElementById('accessMsg').innerText = data.message;
+        }
+      })
+      .catch(() => {
+        document.getElementById('accessMsg').innerText = "Server error. Please try again.";
+      });
+    }
+  </script>
+</body>
+</html>
